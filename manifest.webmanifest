@@ -1,0 +1,11 @@
+{
+  "name":"SerenaMind",
+  "short_name":"SerenaMind",
+  "description":"Persoonlijke ondersteuning voor rust, structuur en herstel.",
+  "start_url":"./",
+  "scope":"./",
+  "display":"standalone",
+  "background_color":"#f4f2f8",
+  "theme_color":"#655a92",
+  "icons":[{"src":"serenamind-logo.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}]
+}

@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#655a92">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="SerenaMind">
+  <link rel="manifest" href="manifest.webmanifest?v=1">
+  <link rel="apple-touch-icon" href="serenamind-logo.png">
+  <link rel="stylesheet" href="styles.css?v=1">
+  <title>SerenaMind</title>
+</head>
+<body class="auth-open">
+  <section id="authScreen" class="auth-screen" role="dialog" aria-modal="true" aria-label="SerenaMind aanmelden">
+    <div class="auth-card">
+      <img src="serenamind-logo.png" class="brand-logo" alt="SerenaMind logo">
+      <h1>Welkom bij SerenaMind</h1>
+      <p class="subtitle">Jouw rustige plek voor structuur, herstel en ondersteuning.</p>
+
+      <div class="auth-tabs" role="tablist">
+        <button type="button" id="loginTab" class="active" role="tab">Inloggen</button>
+        <button type="button" id="registerTab" role="tab">Registreren</button>
+      </div>
+
+      <form id="loginForm" novalidate>
+        <label for="loginUsername">Gebruikersnaam</label>
+        <input id="loginUsername" autocomplete="username" autocapitalize="none" spellcheck="false" required>
+        <label for="loginPassword">Wachtwoord</label>
+        <input id="loginPassword" type="password" autocomplete="current-password" required>
+        <button class="primary" type="submit">Inloggen</button>
+        <p id="loginMessage" class="message" role="status"></p>
+      </form>
+
+      <form id="registerForm" class="hidden" novalidate>
+        <label class="photo-picker" for="profilePhoto">
+          <img id="photoPreview" alt="Voorbeeld profielfoto">
+          <span>Kies een profielfoto</span>
+          <small>Fotobibliotheek, bestanden of camera</small>
+        </label>
+        <input id="profilePhoto" class="file-input" type="file" accept="image/*">
+
+        <label for="displayName">Naam of bijnaam</label>
+        <input id="displayName" maxlength="40" autocomplete="name" required>
+        <label for="registerUsername">Gebruikersnaam</label>
+        <input id="registerUsername" maxlength="30" autocomplete="username" autocapitalize="none" spellcheck="false" required>
+        <label for="registerPassword">Wachtwoord, minimaal 8 tekens</label>
+        <input id="registerPassword" type="password" autocomplete="new-password" required>
+        <label for="repeatPassword">Herhaal wachtwoord</label>
+        <input id="repeatPassword" type="password" autocomplete="new-password" required>
+        <label for="accountRole">Ik gebruik SerenaMind als</label>
+        <select id="accountRole">
+          <option value="client">Cliënt / gebruiker</option>
+          <option value="guide">Begeleider</option>
+        </select>
+        <button class="primary" type="submit">Account maken</button>
+        <p id="registerMessage" class="message" role="status"></p>
+      </form>
+      <p class="privacy-note">Geen e-mail nodig. Het account blijft lokaal opgeslagen in deze browser op dit apparaat.</p>
+    </div>
+  </section>
+
+  <div id="app" class="app-shell" hidden>
+    <header class="app-header">
+      <div class="profile-summary">
+        <img id="headerPhoto" alt="Profielfoto">
+        <div><small>SERENAMIND <b>Fresh 1.0</b></small><h1 id="welcomeName">Fijn dat je er bent</h1></div>
+      </div>
+      <button id="lockButton" class="icon-button" type="button" aria-label="Vergrendel SerenaMind">🔒</button>
+    </header>
+
+    <main>
+      <section id="view-home" class="view active">
+        <div class="hero"><span>Vandaag</span><h2>Wat heb je nu nodig?</h2><p>Kies één kleine stap. Je hoeft niet alles tegelijk te doen.</p></div>
+        <div class="quick-grid">
+          <button data-page="checkin">💜<span>Check-in</span></button>
+          <button data-page="calm">🌿<span>Rust</span></button>
+          <button data-page="focus">🎯<span>Focus</span></button>
+          <button data-page="journal">✍️<span>Dagboek</span></button>
+          <button data-page="plan">🧭<span>Mijn plan</span></button>
+          <button data-page="profile">⚙️<span>Profiel</span></button>
+        </div>
+        <article class="card"><h3>Kleine herinnering</h3><p id="dailyMessage">Een kleine stap is nog steeds een stap.</p></article>
+      </section>
+
+      <section id="view-checkin" class="view">
+        <div class="section-title"><button class="back" data-page="home">‹</button><div><small>DAGELIJKSE CHECK-IN</small><h2>Hoe gaat het nu?</h2></div></div>
+        <article class="card">
+          <label>Gevoel: <b id="moodValue">3/5</b></label><input id="mood" type="range" min="1" max="5" value="3">
+          <label>Prikkels: <b id="stimuliValue">3/5</b></label><input id="stimuli" type="range" min="1" max="5" value="3">
+          <label for="checkinNote">Wat is nu belangrijk?</label><textarea id="checkinNote" rows="4"></textarea>
+          <button id="saveCheckin" class="primary" type="button">Check-in bewaren</button>
+          <p id="checkinMessage" class="message"></p>
+        </article>
+        <div id="checkinList"></div>
+      </section>
+
+      <section id="view-calm" class="view">
+        <div class="section-title"><button class="back" data-page="home">‹</button><div><small>RUST</small><h2>Even landen</h2></div></div>
+        <article class="card center"><div id="breathCircle" class="breath-circle">Adem rustig</div><button id="breathButton" class="primary" type="button">Start 60 seconden</button><p id="breathTimer"></p></article>
+        <article class="card"><h3>5-4-3 rustige oriëntatie</h3><ol><li>Noem 5 dingen die je ziet.</li><li>Noem 4 dingen die je voelt.</li><li>Noem 3 dingen die je hoort.</li></ol></article>
+      </section>
+
+      <section id="view-focus" class="view">
+        <div class="section-title"><button class="back" data-page="home">‹</button><div><small>FOCUS</small><h2>Nu, straks en later</h2></div></div>
+        <article class="card"><label for="nowTask">Nu</label><textarea id="nowTask" rows="3"></textarea><label for="soonTask">Straks</label><textarea id="soonTask" rows="3"></textarea><label for="laterTask">Later</label><textarea id="laterTask" rows="3"></textarea><button id="saveFocus" class="primary" type="button">Plan bewaren</button></article>
+      </section>
+
+      <section id="view-journal" class="view">
+        <div class="section-title"><button class="back" data-page="home">‹</button><div><small>PRIVÉDAGBOEK</small><h2>Mijn notities</h2></div></div>
+        <article class="card"><input id="journalTitle" maxlength="100" placeholder="Titel"><textarea id="journalText" rows="8" placeholder="Schrijf wat je kwijt wilt..."></textarea><button id="saveJournal" class="primary" type="button">Notitie bewaren</button><p class="fine">Notities blijven lokaal in deze browser.</p></article>
+        <div id="journalList"></div>
+      </section>
+
+      <section id="view-plan" class="view">
+        <div class="section-title"><button class="back" data-page="home">‹</button><div><small>MIJN PLAN</small><h2>Wat helpt mij?</h2></div></div>
+        <article class="card"><label for="signals">Mijn vroege signalen</label><textarea id="signals" rows="4"></textarea><label for="helps">Wat helpt meestal?</label><textarea id="helps" rows="4"></textarea><label for="support">Wie kan ik benaderen?</label><textarea id="support" rows="3"></textarea><button id="savePlan" class="primary" type="button">Plan bewaren</button></article>
+      </section>
+
+      <section id="view-profile" class="view">
+        <div class="section-title"><button class="back" data-page="home">‹</button><div><small>PROFIEL</small><h2>Mijn instellingen</h2></div></div>
+        <article class="card profile-card"><img id="profilePhotoView" alt="Profielfoto"><div><h3 id="profileDisplayName"></h3><p id="profileUsername"></p><label class="secondary photo-change" for="changePhoto">Wijzig foto</label><input id="changePhoto" class="file-input" type="file" accept="image/*"></div></article>
+        <article class="card"><button id="exportButton" class="secondary" type="button">Lokale back-up downloaden</button><button id="logoutButton" class="danger" type="button">Uitloggen</button><p class="fine">Bij het wissen van browsergegevens kunnen lokale accounts en gegevens verdwijnen.</p></article>
+      </section>
+    </main>
+
+    <nav class="bottom-nav">
+      <button class="active" data-page="home">⌂<span>Vandaag</span></button>
+      <button data-page="calm">◎<span>Rust</span></button>
+      <button data-page="journal">✎<span>Dagboek</span></button>
+      <button data-page="profile">⚙<span>Profiel</span></button>
+    </nav>
+  </div>
+
+  <section id="lockScreen" class="lock-screen" hidden>
+    <div class="auth-card"><img src="serenamind-logo.png" class="brand-logo" alt="SerenaMind logo"><h2>SerenaMind is vergrendeld</h2><p>Voer je wachtwoord opnieuw in.</p><input id="unlockPassword" type="password" autocomplete="current-password"><button id="unlockButton" class="primary" type="button">Ontgrendelen</button><button id="switchUserButton" class="secondary" type="button">Ander account</button><p id="unlockMessage" class="message"></p></div>
+  </section>
+
+  <script src="app.js?v=1"></script>
+</body>
+</html>
