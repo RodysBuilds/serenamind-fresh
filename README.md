@@ -1,5 +1,9 @@
-# SerenaMind Fresh 2.0
+# SerenaMind 3.0 prototype
 
-Volledig lokaal prototype met account, profielfoto, check-ins, focus, signaleringsplan, herstelplan, prikkelprofiel, spanningsmeter, oriëntatiekaart, apart versleuteld dagboek en versleutelde deelbestanden.
+Upload `index.html` en `serenamind-logo.png` naar de hoofdmap van GitHub Pages.
 
-Het dagboek gebruikt een apart wachtwoord, PBKDF2-sleutelafleiding en AES-GCM-versleuteling in de browser. Het wachtwoord kan niet worden hersteld.
+## Inbegrepen
+Dagelijkse inspiratie, rusttimer, lokaal gegenereerde ruis, slaap, emoties, woedemeter, ouderschap, babylogboek, gelijkwaardigheid, communicatie, delen en een begeleidersportaal.
+
+## Belangrijk
+Dit is een functioneel front-endprototype. Accountregistratie, echte portaalopslag, echte peer-to-peer/end-to-end-versleuteling, professionele audio, medische inhoud en beveiligde backend zijn nog niet productierijp. Gebruik geen echte gezondheidsgegevens in deze prototypeversie.

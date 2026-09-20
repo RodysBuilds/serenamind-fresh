@@ -1,11 +1,15 @@
 {
-  "name":"SerenaMind",
-  "short_name":"SerenaMind",
-  "description":"Lokale ondersteuning met beveiligd dagboek, herstelplan en cliëntregie.",
-  "start_url":"./",
-  "scope":"./",
-  "display":"standalone",
-  "background_color":"#f4f2f8",
-  "theme_color":"#655a92",
-  "icons":[{"src":"serenamind-logo.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}]
+  "name": "SerenaMind 3.0",
+  "short_name": "SerenaMind",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#eefaf7",
+  "theme_color": "#0f766e",
+  "icons": [
+    {
+      "src": "serenamind-logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
 }

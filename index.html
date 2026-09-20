@@ -1,157 +1,20 @@
-<!doctype html>
-<html lang="nl">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#655a92">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="SerenaMind">
-  <link rel="manifest" href="manifest.webmanifest?v=2">
-  <link rel="apple-touch-icon" href="serenamind-logo.png">
-  <link rel="stylesheet" href="styles.css?v=2">
-  <title>SerenaMind</title>
-</head>
-<body class="auth-open">
-  <section id="authScreen" class="auth-screen" role="dialog" aria-modal="true" aria-label="SerenaMind aanmelden">
-    <div class="auth-card">
-      <img src="serenamind-logo.png" class="brand-logo" alt="SerenaMind logo">
-      <h1>Welkom bij SerenaMind</h1>
-      <p class="subtitle">Jouw rustige plek voor structuur, herstel en ondersteuning.</p>
-
-      <div class="auth-tabs" role="tablist">
-        <button type="button" id="loginTab" class="active" role="tab">Inloggen</button>
-        <button type="button" id="registerTab" role="tab">Registreren</button>
-      </div>
-
-      <form id="loginForm" novalidate>
-        <label for="loginUsername">Gebruikersnaam</label>
-        <input id="loginUsername" autocomplete="username" autocapitalize="none" spellcheck="false" required>
-        <label for="loginPassword">Wachtwoord</label>
-        <input id="loginPassword" type="password" autocomplete="current-password" required>
-        <button class="primary" type="submit">Inloggen</button>
-        <p id="loginMessage" class="message" role="status"></p>
-      </form>
-
-      <form id="registerForm" class="hidden" novalidate>
-        <label class="photo-picker" for="profilePhoto">
-          <img id="photoPreview" alt="Voorbeeld profielfoto">
-          <span>Kies een profielfoto</span>
-          <small>Fotobibliotheek, bestanden of camera</small>
-        </label>
-        <input id="profilePhoto" class="file-input" type="file" accept="image/*">
-
-        <label for="displayName">Naam of bijnaam</label>
-        <input id="displayName" maxlength="40" autocomplete="name" required>
-        <label for="registerUsername">Gebruikersnaam</label>
-        <input id="registerUsername" maxlength="30" autocomplete="username" autocapitalize="none" spellcheck="false" required>
-        <label for="registerPassword">Wachtwoord, minimaal 8 tekens</label>
-        <input id="registerPassword" type="password" autocomplete="new-password" required>
-        <label for="repeatPassword">Herhaal wachtwoord</label>
-        <input id="repeatPassword" type="password" autocomplete="new-password" required>
-        <label for="accountRole">Ik gebruik SerenaMind als</label>
-        <select id="accountRole">
-          <option value="client">Cliënt / gebruiker</option>
-          <option value="guide">Begeleider</option>
-        </select>
-        <button class="primary" type="submit">Account maken</button>
-        <p id="registerMessage" class="message" role="status"></p>
-      </form>
-      <p class="privacy-note">Geen e-mail nodig. Het account blijft lokaal opgeslagen in deze browser op dit apparaat.</p>
-    </div>
-  </section>
-
-  <div id="app" class="app-shell" hidden>
-    <header class="app-header">
-      <div class="profile-summary">
-        <img id="headerPhoto" alt="Profielfoto">
-        <div><small>SERENAMIND <b>Fresh 2.0</b></small><h1 id="welcomeName">Fijn dat je er bent</h1></div>
-      </div>
-      <button id="lockButton" class="icon-button" type="button" aria-label="Vergrendel SerenaMind">🔒</button>
-    </header>
-
-    <main>
-      <section id="view-home" class="view active">
-        <div class="hero"><span>Vandaag</span><h2>Wat heb je nu nodig?</h2><p>Kies één kleine stap. Je hoeft niet alles tegelijk te doen.</p></div>
-        <div class="quick-grid">
-          <button data-page="checkin">💜<span>Check-in</span></button>
-          <button data-page="calm">🌿<span>Rust</span></button>
-          <button data-page="focus">🎯<span>Focus</span></button>
-          <button data-page="journal">✍️<span>Dagboek</span></button>
-          <button data-page="plan">🧭<span>Mijn plan</span></button>
-          <button data-page="profile">⚙️<span>Profiel</span></button><button data-page="support">🛟<span>Herstelplan</span></button><button data-page="share">🔐<span>Delen</span></button>
-        </div>
-        <article class="card"><h3>Kleine herinnering</h3><p id="dailyMessage">Een kleine stap is nog steeds een stap.</p></article>
-      </section>
-
-      <section id="view-checkin" class="view">
-        <div class="section-title"><button class="back" data-page="home">‹</button><div><small>DAGELIJKSE CHECK-IN</small><h2>Hoe gaat het nu?</h2></div></div>
-        <article class="card">
-          <label>Gevoel: <b id="moodValue">3/5</b></label><input id="mood" type="range" min="1" max="5" value="3">
-          <label>Prikkels: <b id="stimuliValue">3/5</b></label><input id="stimuli" type="range" min="1" max="5" value="3">
-          <label for="checkinNote">Wat is nu belangrijk?</label><textarea id="checkinNote" rows="4"></textarea>
-          <button id="saveCheckin" class="primary" type="button">Check-in bewaren</button>
-          <p id="checkinMessage" class="message"></p>
-        </article>
-        <div id="checkinList"></div>
-      </section>
-
-      <section id="view-calm" class="view">
-        <div class="section-title"><button class="back" data-page="home">‹</button><div><small>RUST</small><h2>Even landen</h2></div></div>
-        <article class="card center"><div id="breathCircle" class="breath-circle">Adem rustig</div><button id="breathButton" class="primary" type="button">Start 60 seconden</button><p id="breathTimer"></p></article>
-        <article class="card"><h3>5-4-3 rustige oriëntatie</h3><ol><li>Noem 5 dingen die je ziet.</li><li>Noem 4 dingen die je voelt.</li><li>Noem 3 dingen die je hoort.</li></ol></article>
-      </section>
-
-      <section id="view-focus" class="view">
-        <div class="section-title"><button class="back" data-page="home">‹</button><div><small>FOCUS</small><h2>Nu, straks en later</h2></div></div>
-        <article class="card"><label for="nowTask">Nu</label><textarea id="nowTask" rows="3"></textarea><label for="soonTask">Straks</label><textarea id="soonTask" rows="3"></textarea><label for="laterTask">Later</label><textarea id="laterTask" rows="3"></textarea><button id="saveFocus" class="primary" type="button">Plan bewaren</button></article>
-      </section>
-
-      <section id="view-journal" class="view">
-        <div class="section-title"><button class="back" data-page="home">‹</button><div><small>VERSLEUTELD PRIVÉDAGBOEK</small><h2>Mijn beveiligde notities</h2></div></div>
-        <article id="journalSetup" class="card hidden"><h3>Dagboek beveiligen</h3><p>Kies een apart dagboekwachtwoord. Dit wachtwoord kan niet worden hersteld.</p><input id="newJournalPassword" type="password" placeholder="Minimaal 10 tekens"><input id="repeatJournalPassword" type="password" placeholder="Herhaal dagboekwachtwoord"><button id="createJournalVault" class="primary" type="button">Beveiligd dagboek maken</button><p id="journalSetupMessage" class="message"></p></article>
-        <article id="journalUnlock" class="card hidden"><h3>Dagboek is vergrendeld</h3><input id="journalPassword" type="password" placeholder="Dagboekwachtwoord"><button id="unlockJournal" class="primary" type="button">Ontgrendelen</button><p id="journalUnlockMessage" class="message"></p></article>
-        <div id="journalOpen" class="hidden"><article class="card"><div class="journal-tools"><button id="lockJournal" class="secondary" type="button">Vergrendel nu</button><select id="journalTimeout"><option value="1">Na 1 minuut</option><option value="5" selected>Na 5 minuten</option><option value="10">Na 10 minuten</option><option value="15">Na 15 minuten</option></select></div><input id="journalTitle" maxlength="100" placeholder="Titel"><textarea id="journalText" rows="8" placeholder="Schrijf wat je kwijt wilt..."></textarea><button id="saveJournal" class="primary" type="button">Versleuteld bewaren</button><p id="journalMessage" class="message"></p></article><div id="journalList"></div><article class="card"><button id="exportJournal" class="secondary" type="button">Versleutelde dagboekback-up</button><label class="secondary import-label" for="importJournalFile">Back-up importeren</label><input id="importJournalFile" class="file-input" type="file" accept="application/json,.json"></article></div>
-      </section>
-
-      <section id="view-plan" class="view">
-        <div class="section-title"><button class="back" data-page="home">‹</button><div><small>MIJN PLAN</small><h2>Wat helpt mij?</h2></div></div>
-        <article class="card"><label for="signals">Mijn vroege signalen</label><textarea id="signals" rows="4"></textarea><label for="helps">Wat helpt meestal?</label><textarea id="helps" rows="4"></textarea><label for="support">Wie kan ik benaderen?</label><textarea id="support" rows="3"></textarea><button id="savePlan" class="primary" type="button">Plan bewaren</button></article>
-      </section>
-
-      <section id="view-support" class="view">
-        <div class="section-title"><button class="back" data-page="home">‹</button><div><small>HERSTEL EN REGIE</small><h2>Mijn persoonlijke plan</h2></div></div>
-        <article class="card"><h3>Prikkelprofiel</h3><div class="choice-grid" id="stimulusChoices"><label><input type="checkbox" value="geluid"> Geluid</label><label><input type="checkbox" value="licht"> Licht</label><label><input type="checkbox" value="drukte"> Drukte</label><label><input type="checkbox" value="aanraking"> Aanraking</label><label><input type="checkbox" value="veranderingen"> Veranderingen</label><label><input type="checkbox" value="gesprekken"> Gesprekken</label></div><label>Huidige prikkelstatus</label><select id="stimulusStatus"><option>Rustig</option><option>Oplopend</option><option>Vol</option><option>Herstel nodig</option></select><label>Wat helpt meestal?</label><textarea id="stimulusHelps" rows="3"></textarea></article>
-        <article class="card"><h3>Spanning en regie</h3><label>Mijn spanning</label><input id="tensionLevel" type="range" min="1" max="4" value="1"><div id="tensionLabel" class="status-pill">Rustig</div><label>Vroege signalen</label><textarea id="tensionSignals" rows="3"></textarea><label>Wat wil ik doen als spanning oploopt?</label><textarea id="tensionActions" rows="4" placeholder="Bijvoorbeeld afstand nemen, rustplek zoeken of steuncontact bellen"></textarea></article>
-        <article class="card"><h3>Oriëntatiekaart</h3><label>Ik ben nu in</label><input id="orientationPlace"><label>Helpende zin</label><input id="orientationSentence" placeholder="Ik ben nu hier en mag rustig om mij heen kijken"><label>Steuncontact</label><input id="orientationContact"><button id="showOrientation" class="secondary" type="button">Toon rustige kaart</button><div id="orientationCard" class="orientation-card hidden"></div></article>
-        <button id="saveSupportPlan" class="primary" type="button">Herstelplan bewaren</button><p id="supportMessage" class="message"></p>
-      </section>
-
-      <section id="view-share" class="view">
-        <div class="section-title"><button class="back" data-page="home">‹</button><div><small>CLIËNTREGIE</small><h2>Veilig delen</h2></div></div>
-        <article class="card"><p>Maak lokaal een versleuteld deelbestand. Het dagboek wordt nooit opgenomen.</p><div class="choice-grid" id="shareChoices"><label><input type="checkbox" value="checkins"> Check-ins</label><label><input type="checkbox" value="focus"> Focusplan</label><label><input type="checkbox" value="plan"> Signaleringsplan</label><label><input type="checkbox" value="support"> Herstelplan</label></div><label>Persoonlijk bericht</label><textarea id="shareMessage" rows="4"></textarea><label>Deelwachtwoord, minimaal 10 tekens</label><input id="sharePassword" type="password"><button id="exportShare" class="primary" type="button">Versleuteld deelbestand maken</button><p id="shareStatus" class="message"></p></article>
-        <article class="card"><h3>Deelbestand openen</h3><input id="shareImportFile" type="file" accept="application/json,.json"><label>Deelwachtwoord</label><input id="shareImportPassword" type="password"><button id="importShare" class="secondary" type="button">Open lokaal</button><div id="sharedResult"></div></article>
-      </section>
-
-      <section id="view-profile" class="view">
-        <div class="section-title"><button class="back" data-page="home">‹</button><div><small>PROFIEL</small><h2>Mijn instellingen</h2></div></div>
-        <article class="card profile-card"><img id="profilePhotoView" alt="Profielfoto"><div><h3 id="profileDisplayName"></h3><p id="profileUsername"></p><label class="secondary photo-change" for="changePhoto">Wijzig foto</label><input id="changePhoto" class="file-input" type="file" accept="image/*"></div></article>
-        <article class="card"><button id="exportButton" class="secondary" type="button">Lokale back-up downloaden</button><button id="logoutButton" class="danger" type="button">Uitloggen</button><p class="fine">Bij het wissen van browsergegevens kunnen lokale accounts en gegevens verdwijnen.</p></article>
-      </section>
-    </main>
-
-    <nav class="bottom-nav">
-      <button class="active" data-page="home">⌂<span>Vandaag</span></button>
-      <button data-page="calm">◎<span>Rust</span></button>
-      <button data-page="journal">✎<span>Dagboek</span></button>
-      <button data-page="profile">⚙<span>Profiel</span></button>
-    </nav>
-  </div>
-
-  <section id="lockScreen" class="lock-screen" hidden>
-    <div class="auth-card"><img src="serenamind-logo.png" class="brand-logo" alt="SerenaMind logo"><h2>SerenaMind is vergrendeld</h2><p>Voer je wachtwoord opnieuw in.</p><input id="unlockPassword" type="password" autocomplete="current-password"><button id="unlockButton" class="primary" type="button">Ontgrendelen</button><button id="switchUserButton" class="secondary" type="button">Ander account</button><p id="unlockMessage" class="message"></p></div>
-  </section>
-
-  <script src="app.js?v=2"></script><script src="secure-journal.js?v=2"></script><script src="recovery-share.js?v=2"></script>
-</body>
-</html>
+<!doctype html><html lang="nl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0f766e"><title>SerenaMind 3.0</title><style>
+:root{--ink:#183432;--muted:#64748b;--brand:#4338ca;--teal:#0f766e;--bg:#eefaf7;--card:#fff;--danger:#b91c1c}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:var(--ink);background:linear-gradient(145deg,#e7faf5,#f2f0ff);min-height:100dvh}.app{max-width:1120px;margin:auto;padding:18px 16px 100px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px}.brand{display:flex;align-items:center;gap:12px}.logo{width:68px;height:68px;border-radius:20px;object-fit:cover}.badge{font-size:.65rem;background:#312e81;color:#fff;padding:5px 8px;border-radius:999px}.roles,.nav,.chips{display:flex;gap:8px;flex-wrap:wrap}.roles button,.nav button,.chips button,.btn{border:0;border-radius:14px;padding:11px 14px;font-weight:750;cursor:pointer}.roles button,.nav button,.chips button{background:#fff;color:var(--ink)}.roles button.active,.nav button.active,.btn{background:var(--brand);color:#fff}.nav{position:sticky;top:0;z-index:20;padding:12px 0;background:#effbf8e8;backdrop-filter:blur(14px);overflow:auto;flex-wrap:nowrap}.nav button{white-space:nowrap}.panel{display:none}.panel.active{display:block}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.card{background:var(--card);border-radius:22px;padding:18px;box-shadow:0 12px 35px #0f172a12}.card h3{margin:0 0 8px}.hero{grid-column:1/-1;background:linear-gradient(135deg,#312e81,#7e22ce);color:#fff}.soft{background:#f0fdfa}.warn{background:#fff7ed;border-left:4px solid #f97316}.private{border-left:4px solid #14b8a6}.item{padding:11px;background:#f8fafc;border-radius:13px;margin:8px 0}.small{font-size:.82rem;color:var(--muted)}.quote{font-size:1.25rem;line-height:1.45}.range{width:100%}textarea,input,select{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:13px;font:inherit;margin:6px 0}.timer{font-size:2rem;font-weight:850}.hidden{display:none!important}.bottom{position:fixed;bottom:0;left:0;right:0;background:#ffffffee;backdrop-filter:blur(16px);padding:10px;display:flex;justify-content:center;gap:8px;z-index:30}.bottom button{border:0;border-radius:999px;padding:11px 16px;background:#312e81;color:#fff;font-weight:800}.crisis{background:#fff1f2;color:#9f1239;padding:12px;border-radius:14px;margin-top:16px}.audioRow{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center}.progress{height:8px;border-radius:999px;background:#e2e8f0;overflow:hidden}.progress span{display:block;height:100%;width:0;background:#14b8a6}.switch{display:flex;align-items:center;gap:10px}.switch input{width:auto}.portal{display:none}.portal.active{display:block}.foot{margin-top:20px;text-align:center;color:var(--muted);font-size:.75rem}@media(max-width:800px){.grid{grid-template-columns:1fr}.top{align-items:flex-start}.roles{flex-direction:column}.logo{width:58px;height:58px}}
+</style></head><body><div class="app"><header class="top"><div class="brand"><img src="serenamind-logo.png" class="logo" alt="SerenaMind-logo"><div><b>SERENAMIND <span class="badge">v3.0 prototype</span></b><h1 style="margin:3px 0">Rust, ouderschap en regie</h1><div class="small">Persoonlijk welzijn en veilige samenwerking</div></div></div><div class="roles"><button class="active" data-role="client">Cliënt</button><button data-role="guide">Begeleider</button></div></header><nav class="nav" id="nav"></nav>
+<main id="client" class="portal active">
+<section class="panel active" data-panel="Vandaag"><div class="grid"><div class="card hero"><h2>Hoe is het nu?</h2><p>Overslaan mag altijd. Kies alleen wat past.</p><div class="chips"><button>Rustig</button><button>Overprikkeld</button><button>Boos</button><button>Bang</button><button>Somber</button><button>Ik weet het niet</button></div></div><div class="card"><h3>Dagelijkse inspiratie</h3><p class="quote" id="quote"></p><button class="btn" id="nextQuote">Nieuwe kaart</button></div><div class="card"><h3>Kleine stap</h3><p>Kies één haalbare actie.</p><select><option>Vijf minuten rust</option><option>Glas water</option><option>Twee minuten buiten</option><option>Eén taak opdelen</option></select><button class="btn">Kies voor vandaag</button></div><div class="card"><h3>Mijn dag</h3><div class="item">Eerstvolgende afspraak</div><div class="item">Herstelpauze</div><div class="item">Eén belangrijke taak</div></div></div></section>
+<section class="panel" data-panel="Nu hulp"><div class="grid"><div class="card hero"><h2>Ik heb het nu moeilijk</h2><p>Kies een rustige route. SerenaMind is geen crisisdienst.</p></div><div class="card"><h3>Overprikkeling</h3><p>Scherm dimmen, stilte, gronden en persoonlijk plan.</p><button class="btn">Start rustmodus</button></div><div class="card"><h3>Boosheid</h3><label>Woedemeter: <b id="angerValue">5</b>/10</label><input class="range" id="anger" type="range" min="0" max="10" value="5"><button class="btn" data-start="60">60 sec. afkoelen</button></div><div class="card"><h3>Angst of paniek</h3><div class="item">Voel je voeten</div><div class="item">Noem vijf dingen die je ziet</div><div class="item">Open je steunkaart</div></div><div class="card"><h3>Somber of leeg</h3><p>Kies een kleine zelfzorgactie of neem contact op met iemand die je vertrouwt.</p></div><div class="card"><h3>Timer</h3><div class="timer" id="timer">01:00</div><div class="progress"><span id="timerBar"></span></div></div></div><div class="crisis">Bij direct gevaar: bel 112. Bij gedachten aan zelfdoding: 113 of 0800-0113.</div></section>
+<section class="panel" data-panel="Rust"><div class="grid"><div class="card"><h3>Meditaties</h3><div class="item">1 minuut landen</div><div class="item">3 minuten lichaamsrust</div><div class="item">5 minuten na overprikkeling</div><div class="item">10 minuten voor slapen</div><button class="btn" data-start="180">Start 3 minuten</button></div><div class="card"><h3>Rustgeluiden</h3><p class="small">Het prototype maakt lokaal zachte ruis. Voeg later echte geluidsbestanden toe.</p><div class="audioRow"><select id="noiseType"><option value="brown">Bruine ruis</option><option value="white">Witte ruis</option><option value="pink">Roze ruis</option></select><button class="btn" id="toggleNoise">Start</button></div><label>Volume<input class="range" id="volume" type="range" min="0" max="0.2" value="0.04" step="0.01"></label></div><div class="card"><h3>Persoonlijke mix</h3><label>Regen<input class="range" type="range" min="0" max="100" value="70"></label><label>Kampvuur<input class="range" type="range" min="0" max="100" value="20"></label><label>Wind<input class="range" type="range" min="0" max="100" value="10"></label><p class="small">Ontwerp voor toekomstige audiomix met zachte start en uitfaden.</p></div></div></section>
+<section class="panel" data-panel="Slapen"><div class="grid"><div class="card"><h3>Avondroutine</h3><label class="switch"><input type="checkbox">Licht dimmen</label><label class="switch"><input type="checkbox">Gedachten parkeren</label><label class="switch"><input type="checkbox">Meldingen uit</label><label class="switch"><input type="checkbox">Rustgeluid starten</label></div><div class="card"><h3>Dit hoeft vannacht niet</h3><textarea id="parking" rows="6" placeholder="Schrijf het van je af..."></textarea><button class="btn" id="saveParking">Privé bewaren</button></div><div class="card"><h3>Slaapreflectie</h3><label>Hoe uitgerust?<input type="range" min="0" max="10"></label><textarea rows="4" placeholder="Wat hielp of stoorde?"></textarea></div></div></section>
+<section class="panel" data-panel="Emoties"><div class="grid"><div class="card"><h3>Emotiewiel</h3><div class="chips"><button>Blij</button><button>Verdrietig</button><button>Boos</button><button>Bang</button><button>Beschaamd</button><button>Eenzaam</button><button>Verward</button><button>Afgevlakt</button></div></div><div class="card"><h3>Reflectie</h3><textarea rows="4" placeholder="Wat gebeurde er?"></textarea><textarea rows="3" placeholder="Wat had je nodig?"></textarea><button class="btn">Privé opslaan</button></div><div class="card"><h3>Woedeplan</h3><div class="item">Mijn vroege signalen</div><div class="item">Mijn triggers</div><div class="item">Wat helpt</div><div class="item">Wie mag helpen</div></div></div></section>
+<section class="panel" data-panel="Ouderschap"><div class="grid"><div class="card hero"><h2>Eerste keer ouder</h2><p>Geen perfectie, wel steun, rust en betrouwbare vragen voor professionals.</p></div><div class="card"><h3>Mijn herstel</h3><label>Hoe is mijn energie?<input type="range" min="0" max="10"></label><textarea rows="3" placeholder="Wat heb ik vandaag nodig?"></textarea></div><div class="card"><h3>Baby leren begrijpen</h3><div class="item">Wat zie of hoor ik?</div><div class="item">Wat gebeurde ervoor?</div><div class="item">Wat heb ik geprobeerd?</div><div class="item">Wat leek te helpen?</div></div><div class="card"><h3>Babylogboek</h3><select><option>Voeding</option><option>Slaap</option><option>Verschonen</option><option>Huilmoment</option><option>Contactmoment</option></select><textarea placeholder="Korte notitie"></textarea><button class="btn">Privé toevoegen</button></div><div class="card"><h3>Samen zorgen</h3><div class="item">Nachtmomenten</div><div class="item">Boodschappen</div><div class="item">Rusttijd verzorger A</div><div class="item">Rusttijd verzorger B</div></div><div class="card"><h3>Steunnetwerk</h3><div class="item">Verloskundige / kraamzorg</div><div class="item">Consultatiebureau / huisarts</div><div class="item">Familie of vertrouwd contact</div></div><div class="card warn"><h3>Geen medisch oordeel</h3><p>De app helpt observaties en vragen ordenen. Neem bij zorgen contact op met een bevoegde zorgprofessional.</p></div><div class="card"><h3>Ik ben meer dan ouder</h3><textarea rows="3" placeholder="Welke kleine activiteit is van mij?"></textarea></div></div></section>
+<section class="panel" data-panel="Gelijkwaardigheid"><div class="grid"><div class="card hero"><h2>Gelijkwaardigheid en zelfvertrouwen</h2><p>Vrijwillige educatie over grenzen, taakverdeling, rechten en emancipatie.</p></div><div class="card"><h3>Mijn grenzen</h3><div class="item">Ik wil hierover meebeslissen.</div><div class="item">Ik heb tijd nodig om dit te verwerken.</div><div class="item">Deze taakverdeling werkt niet voor mij.</div><div class="item">Ik geef hier geen toestemming voor.</div></div><div class="card"><h3>Onzichtbare taken</h3><label class="switch"><input type="checkbox">Planning</label><label class="switch"><input type="checkbox">Kinderzorg</label><label class="switch"><input type="checkbox">Huishouden</label><label class="switch"><input type="checkbox">Administratie</label></div><div class="card"><h3>Feminisme en emancipatie</h3><p>Gelijke rechten, kansen, veiligheid, economische zelfstandigheid en deelname aan besluitvorming.</p></div><div class="card"><h3>Werk en zelfstandigheid</h3><textarea rows="4" placeholder="Welke vraag wil ik voorbereiden voor werk, opleiding of financiële ondersteuning?"></textarea></div><div class="card warn"><h3>Veiligheid en respect</h3><p>Bewaar gevoelige notities privé en gebruik snelle vergrendeling. Bij onveiligheid: neem contact op met passende professionele hulp.</p></div></div></section>
+<section class="panel" data-panel="Communicatie"><div class="grid"><div class="card"><h3>Communicatiepaspoort</h3><label class="switch"><input type="checkbox">Eén vraag tegelijk</label><label class="switch"><input type="checkbox">Extra verwerkingstijd</label><label class="switch"><input type="checkbox">Afspraken opschrijven</label><label class="switch"><input type="checkbox">Pauze mogelijk maken</label></div><div class="card"><h3>Berichtenbouwer</h3><textarea placeholder="Wat gebeurde er feitelijk?"></textarea><textarea placeholder="Wat heb ik nodig?"></textarea><textarea placeholder="Wat vraag ik concreet?"></textarea></div><div class="card"><h3>Snelle zinnen</h3><div class="chips"><button>Pauze</button><button>Leg anders uit</button><button>Later terugkomen</button><button>Geen toestemming</button></div></div></div></section>
+<section class="panel" data-panel="Delen"><div class="grid"><div class="card private"><h3>Persoonlijke kluis</h3><p>Dagboek, audio, emoties en ouderschapsnotities blijven standaard privé.</p></div><div class="card"><h3>Samenwerkingskluis</h3><p>Alleen jij en een specifiek goedgekeurde begeleider.</p></div><div class="card"><h3>Tijdelijke deelruimte</h3><input placeholder="Doel van delen"><input placeholder="Ontvanger"><input type="date"><button class="btn">Voorstel maken</button></div><div class="card"><h3>Rechten</h3><label class="switch"><input type="checkbox">Lezen</label><label class="switch"><input type="checkbox">Reageren</label><label class="switch"><input type="checkbox">Downloaden</label><label class="switch"><input type="checkbox">Doorsturen</label></div><div class="card"><h3>Toegangslog</h3><p class="small">In productie: wie opende welk gedeeld onderdeel en wanneer.</p></div><div class="card warn"><h3>Prototype</h3><p>Echte end-to-end-versleuteling en portaalopslag zijn nog niet verbonden in deze statische versie.</p></div></div></section>
+</main>
+<main id="guide" class="portal"><section class="panel active" data-panel="Dashboard"><div class="grid"><div class="card hero"><h2>Begeleidersportaal</h2><p>Alleen expliciet gedeelde informatie. Geen privédagboek of verborgen monitoring.</p></div><div class="card"><h3>Nieuwe voorstellen</h3><div class="item">Doel ter goedkeuring</div><div class="item">Afspraakvoorstel</div></div><div class="card"><h3>Reactietijd</h3><p>Binnen twee werkdagen. Geen spoedkanaal.</p></div><div class="card"><h3>Toegang</h3><p>Alle handelingen horen in een zichtbaar auditlog.</p></div></div></section><section class="panel" data-panel="Cliënten"><div class="grid"><div class="card"><h3>Gedeelde doelen</h3><p>Alleen door de cliënt gekozen onderdelen.</p></div><div class="card"><h3>Ouderschap</h3><p>Gedeelde hulpvragen, afspraken en steunnetwerk. Geen volledig babylogboek.</p></div><div class="card warn"><h3>Niet zichtbaar</h3><p>Privédagboek, persoonlijke audio, niet-gedeelde emoties en verwijderde gegevens.</p></div></div></section><section class="panel" data-panel="Plannen"><div class="grid"><div class="card"><h3>Herstelplan</h3><p>Waarden, doelen, tempo en draagkracht.</p></div><div class="card"><h3>Signaleringsplan</h3><p>Groen, oranje, rood en afgesproken contactvolgorde.</p></div><div class="card"><h3>Gezinsplan</h3><p>Praktische steun, taakverdeling en rustmomenten, alleen na toestemming.</p></div></div></section><section class="panel" data-panel="Berichten"><div class="grid"><div class="card"><h3>Veilige communicatie</h3><p>Eenvoudige taal, voorlezen en pictogrammen.</p></div><div class="card"><h3>Voorstel, geen wijziging</h3><p>De cliënt accepteert, past aan of weigert.</p></div><div class="card"><h3>Geen scores</h3><p>Geen motivatie-, therapietrouw- of ouderschapsscore.</p></div></div></section><section class="panel" data-panel="Beheer"><div class="grid"><div class="card"><h3>Rollen</h3><p>Begeleider, behandelaar, werkcoach, naaste en organisatiebeheerder.</p></div><div class="card"><h3>Apparaten</h3><p>Verifiëren, verwijderen en sessies beëindigen.</p></div><div class="card warn"><h3>Geen inhoud</h3><p>Organisatiebeheerders beheren techniek, niet persoonlijke inhoud.</p></div></div></section></main>
+<div class="foot">SerenaMind 3.0 is een functioneel prototype en geen medisch hulpmiddel of crisisdienst.</div></div><div class="bottom"><button id="less">Toon minder keuzes</button><button id="top">Naar boven</button></div><script>
+const menus={client:['Vandaag','Nu hulp','Rust','Slapen','Emoties','Ouderschap','Gelijkwaardigheid','Communicatie','Delen'],guide:['Dashboard','Cliënten','Plannen','Berichten','Beheer']};let role='client',noise=null,audio=null,timerInt=null;const quotes=['Je hoeft vandaag niet alles op te lossen.','Een kleine stap telt ook.','Rust is geen mislukking.','Je mag om duidelijkheid vragen.','Goed ouderschap hoeft niet perfect te zijn.','Je mag ruimte innemen en grenzen aangeven.'];
+function buildNav(){nav.innerHTML=menus[role].map((x,i)=>`<button class="${i?'':'active'}">${x}</button>`).join('');[...nav.children].forEach(b=>b.onclick=()=>show(b.textContent,b))}function show(name,b){document.querySelectorAll('#'+role+' .panel').forEach(p=>p.classList.toggle('active',p.dataset.panel===name));[...nav.children].forEach(x=>x.classList.toggle('active',x===b));scrollTo({top:0,behavior:'smooth'})}document.querySelectorAll('[data-role]').forEach(b=>b.onclick=()=>{role=b.dataset.role;document.querySelectorAll('[data-role]').forEach(x=>x.classList.toggle('active',x===b));client.classList.toggle('active',role==='client');guide.classList.toggle('active',role==='guide');buildNav()});quote.textContent=quotes[Math.floor(Math.random()*quotes.length)];nextQuote.onclick=()=>quote.textContent=quotes[Math.floor(Math.random()*quotes.length)];anger.oninput=()=>angerValue.textContent=anger.value;document.querySelectorAll('[data-start]').forEach(b=>b.onclick=()=>startTimer(+b.dataset.start));function startTimer(sec){clearInterval(timerInt);const total=sec;function draw(){timer.textContent=String(Math.floor(sec/60)).padStart(2,'0')+':'+String(sec%60).padStart(2,'0');timerBar.style.width=((total-sec)/total*100)+'%';if(sec--<=0)clearInterval(timerInt)}draw();timerInt=setInterval(draw,1000)}
+toggleNoise.onclick=async()=>{if(noise){noise.stop();noise=null;audio.close();toggleNoise.textContent='Start';return}audio=new AudioContext();const len=audio.sampleRate*2,buf=audio.createBuffer(1,len,audio.sampleRate),d=buf.getChannelData(0);let last=0;for(let i=0;i<len;i++){let w=Math.random()*2-1;if(noiseType.value==='brown'){last=(last+.02*w)/1.02;d[i]=last*3.5}else if(noiseType.value==='pink'){d[i]=(w+(i?d[i-1]*.98:0))*.12}else d[i]=w*.18}noise=audio.createBufferSource();const gain=audio.createGain();gain.gain.value=+volume.value;volume.oninput=()=>gain.gain.value=+volume.value;noise.buffer=buf;noise.loop=true;noise.connect(gain).connect(audio.destination);noise.start();toggleNoise.textContent='Stop'};saveParking.onclick=()=>{localStorage.setItem('serenamindParking',parking.value);saveParking.textContent='Privé bewaard'};parking.value=localStorage.getItem('serenamindParking')||'';less.onclick=()=>{menus.client=['Vandaag','Nu hulp','Rust','Delen'];role='client';client.classList.add('active');guide.classList.remove('active');buildNav()};top.onclick=()=>scrollTo({top:0,behavior:'smooth'});buildNav();
+</script></body></html>
