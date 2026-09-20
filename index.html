@@ -7,9 +7,9 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="SerenaMind">
-  <link rel="manifest" href="manifest.webmanifest?v=1">
+  <link rel="manifest" href="manifest.webmanifest?v=2">
   <link rel="apple-touch-icon" href="serenamind-logo.png">
-  <link rel="stylesheet" href="styles.css?v=1">
+  <link rel="stylesheet" href="styles.css?v=2">
   <title>SerenaMind</title>
 </head>
 <body class="auth-open">
@@ -65,7 +65,7 @@
     <header class="app-header">
       <div class="profile-summary">
         <img id="headerPhoto" alt="Profielfoto">
-        <div><small>SERENAMIND <b>Fresh 1.0</b></small><h1 id="welcomeName">Fijn dat je er bent</h1></div>
+        <div><small>SERENAMIND <b>Fresh 2.0</b></small><h1 id="welcomeName">Fijn dat je er bent</h1></div>
       </div>
       <button id="lockButton" class="icon-button" type="button" aria-label="Vergrendel SerenaMind">🔒</button>
     </header>
@@ -79,7 +79,7 @@
           <button data-page="focus">🎯<span>Focus</span></button>
           <button data-page="journal">✍️<span>Dagboek</span></button>
           <button data-page="plan">🧭<span>Mijn plan</span></button>
-          <button data-page="profile">⚙️<span>Profiel</span></button>
+          <button data-page="profile">⚙️<span>Profiel</span></button><button data-page="support">🛟<span>Herstelplan</span></button><button data-page="share">🔐<span>Delen</span></button>
         </div>
         <article class="card"><h3>Kleine herinnering</h3><p id="dailyMessage">Een kleine stap is nog steeds een stap.</p></article>
       </section>
@@ -108,14 +108,29 @@
       </section>
 
       <section id="view-journal" class="view">
-        <div class="section-title"><button class="back" data-page="home">‹</button><div><small>PRIVÉDAGBOEK</small><h2>Mijn notities</h2></div></div>
-        <article class="card"><input id="journalTitle" maxlength="100" placeholder="Titel"><textarea id="journalText" rows="8" placeholder="Schrijf wat je kwijt wilt..."></textarea><button id="saveJournal" class="primary" type="button">Notitie bewaren</button><p class="fine">Notities blijven lokaal in deze browser.</p></article>
-        <div id="journalList"></div>
+        <div class="section-title"><button class="back" data-page="home">‹</button><div><small>VERSLEUTELD PRIVÉDAGBOEK</small><h2>Mijn beveiligde notities</h2></div></div>
+        <article id="journalSetup" class="card hidden"><h3>Dagboek beveiligen</h3><p>Kies een apart dagboekwachtwoord. Dit wachtwoord kan niet worden hersteld.</p><input id="newJournalPassword" type="password" placeholder="Minimaal 10 tekens"><input id="repeatJournalPassword" type="password" placeholder="Herhaal dagboekwachtwoord"><button id="createJournalVault" class="primary" type="button">Beveiligd dagboek maken</button><p id="journalSetupMessage" class="message"></p></article>
+        <article id="journalUnlock" class="card hidden"><h3>Dagboek is vergrendeld</h3><input id="journalPassword" type="password" placeholder="Dagboekwachtwoord"><button id="unlockJournal" class="primary" type="button">Ontgrendelen</button><p id="journalUnlockMessage" class="message"></p></article>
+        <div id="journalOpen" class="hidden"><article class="card"><div class="journal-tools"><button id="lockJournal" class="secondary" type="button">Vergrendel nu</button><select id="journalTimeout"><option value="1">Na 1 minuut</option><option value="5" selected>Na 5 minuten</option><option value="10">Na 10 minuten</option><option value="15">Na 15 minuten</option></select></div><input id="journalTitle" maxlength="100" placeholder="Titel"><textarea id="journalText" rows="8" placeholder="Schrijf wat je kwijt wilt..."></textarea><button id="saveJournal" class="primary" type="button">Versleuteld bewaren</button><p id="journalMessage" class="message"></p></article><div id="journalList"></div><article class="card"><button id="exportJournal" class="secondary" type="button">Versleutelde dagboekback-up</button><label class="secondary import-label" for="importJournalFile">Back-up importeren</label><input id="importJournalFile" class="file-input" type="file" accept="application/json,.json"></article></div>
       </section>
 
       <section id="view-plan" class="view">
         <div class="section-title"><button class="back" data-page="home">‹</button><div><small>MIJN PLAN</small><h2>Wat helpt mij?</h2></div></div>
         <article class="card"><label for="signals">Mijn vroege signalen</label><textarea id="signals" rows="4"></textarea><label for="helps">Wat helpt meestal?</label><textarea id="helps" rows="4"></textarea><label for="support">Wie kan ik benaderen?</label><textarea id="support" rows="3"></textarea><button id="savePlan" class="primary" type="button">Plan bewaren</button></article>
+      </section>
+
+      <section id="view-support" class="view">
+        <div class="section-title"><button class="back" data-page="home">‹</button><div><small>HERSTEL EN REGIE</small><h2>Mijn persoonlijke plan</h2></div></div>
+        <article class="card"><h3>Prikkelprofiel</h3><div class="choice-grid" id="stimulusChoices"><label><input type="checkbox" value="geluid"> Geluid</label><label><input type="checkbox" value="licht"> Licht</label><label><input type="checkbox" value="drukte"> Drukte</label><label><input type="checkbox" value="aanraking"> Aanraking</label><label><input type="checkbox" value="veranderingen"> Veranderingen</label><label><input type="checkbox" value="gesprekken"> Gesprekken</label></div><label>Huidige prikkelstatus</label><select id="stimulusStatus"><option>Rustig</option><option>Oplopend</option><option>Vol</option><option>Herstel nodig</option></select><label>Wat helpt meestal?</label><textarea id="stimulusHelps" rows="3"></textarea></article>
+        <article class="card"><h3>Spanning en regie</h3><label>Mijn spanning</label><input id="tensionLevel" type="range" min="1" max="4" value="1"><div id="tensionLabel" class="status-pill">Rustig</div><label>Vroege signalen</label><textarea id="tensionSignals" rows="3"></textarea><label>Wat wil ik doen als spanning oploopt?</label><textarea id="tensionActions" rows="4" placeholder="Bijvoorbeeld afstand nemen, rustplek zoeken of steuncontact bellen"></textarea></article>
+        <article class="card"><h3>Oriëntatiekaart</h3><label>Ik ben nu in</label><input id="orientationPlace"><label>Helpende zin</label><input id="orientationSentence" placeholder="Ik ben nu hier en mag rustig om mij heen kijken"><label>Steuncontact</label><input id="orientationContact"><button id="showOrientation" class="secondary" type="button">Toon rustige kaart</button><div id="orientationCard" class="orientation-card hidden"></div></article>
+        <button id="saveSupportPlan" class="primary" type="button">Herstelplan bewaren</button><p id="supportMessage" class="message"></p>
+      </section>
+
+      <section id="view-share" class="view">
+        <div class="section-title"><button class="back" data-page="home">‹</button><div><small>CLIËNTREGIE</small><h2>Veilig delen</h2></div></div>
+        <article class="card"><p>Maak lokaal een versleuteld deelbestand. Het dagboek wordt nooit opgenomen.</p><div class="choice-grid" id="shareChoices"><label><input type="checkbox" value="checkins"> Check-ins</label><label><input type="checkbox" value="focus"> Focusplan</label><label><input type="checkbox" value="plan"> Signaleringsplan</label><label><input type="checkbox" value="support"> Herstelplan</label></div><label>Persoonlijk bericht</label><textarea id="shareMessage" rows="4"></textarea><label>Deelwachtwoord, minimaal 10 tekens</label><input id="sharePassword" type="password"><button id="exportShare" class="primary" type="button">Versleuteld deelbestand maken</button><p id="shareStatus" class="message"></p></article>
+        <article class="card"><h3>Deelbestand openen</h3><input id="shareImportFile" type="file" accept="application/json,.json"><label>Deelwachtwoord</label><input id="shareImportPassword" type="password"><button id="importShare" class="secondary" type="button">Open lokaal</button><div id="sharedResult"></div></article>
       </section>
 
       <section id="view-profile" class="view">
@@ -137,6 +152,6 @@
     <div class="auth-card"><img src="serenamind-logo.png" class="brand-logo" alt="SerenaMind logo"><h2>SerenaMind is vergrendeld</h2><p>Voer je wachtwoord opnieuw in.</p><input id="unlockPassword" type="password" autocomplete="current-password"><button id="unlockButton" class="primary" type="button">Ontgrendelen</button><button id="switchUserButton" class="secondary" type="button">Ander account</button><p id="unlockMessage" class="message"></p></div>
   </section>
 
-  <script src="app.js?v=1"></script>
+  <script src="app.js?v=2"></script><script src="secure-journal.js?v=2"></script><script src="recovery-share.js?v=2"></script>
 </body>
 </html>

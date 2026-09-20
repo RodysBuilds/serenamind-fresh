@@ -1,7 +1,7 @@
 {
   "name":"SerenaMind",
   "short_name":"SerenaMind",
-  "description":"Persoonlijke ondersteuning voor rust, structuur en herstel.",
+  "description":"Lokale ondersteuning met beveiligd dagboek, herstelplan en cliëntregie.",
   "start_url":"./",
   "scope":"./",
   "display":"standalone",

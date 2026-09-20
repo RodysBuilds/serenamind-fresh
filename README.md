@@ -1,14 +1,5 @@
-# SerenaMind Fresh 1.0
+# SerenaMind Fresh 2.0
 
-Een volledig nieuw, schoon project zonder Supabase, cloudlogin of oude conflicterende code.
+Volledig lokaal prototype met account, profielfoto, check-ins, focus, signaleringsplan, herstelplan, prikkelprofiel, spanningsmeter, oriëntatiekaart, apart versleuteld dagboek en versleutelde deelbestanden.
 
-## Account
-- Naam of bijnaam
-- Gebruikersnaam
-- Wachtwoord
-- Rol cliënt of begeleider
-- Profielfoto uit fotobibliotheek/bestanden/camera
-- Account blijft lokaal onthouden totdat de gebruiker uitlogt of browsergegevens wist
-
-## Publiceren
-Zie `INSTALLATIE.md`.
+Het dagboek gebruikt een apart wachtwoord, PBKDF2-sleutelafleiding en AES-GCM-versleuteling in de browser. Het wachtwoord kan niet worden hersteld.
