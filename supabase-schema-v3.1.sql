@@ -1,0 +1,15 @@
+create extension if not exists pgcrypto;
+create table if not exists public.profiles(id uuid primary key references auth.users(id) on delete cascade,username text not null unique,display_name text not null,role text not null default 'client' check(role in('client','guide','admin')),recovery_hash text not null,created_at timestamptz not null default now());
+alter table public.profiles enable row level security;
+create policy "read own profile" on public.profiles for select using(auth.uid()=id);
+create policy "update own profile" on public.profiles for update using(auth.uid()=id) with check(auth.uid()=id);
+create table if not exists public.encrypted_records(id uuid primary key default gen_random_uuid(),owner_id uuid not null references auth.users(id) on delete cascade,vault_type text not null check(vault_type in('personal','shared')),record_type text not null,ciphertext text not null,nonce text not null,algorithm text not null default 'AES-GCM',created_at timestamptz not null default now(),updated_at timestamptz not null default now());
+alter table public.encrypted_records enable row level security;
+create policy "owner encrypted records" on public.encrypted_records for all using(auth.uid()=owner_id) with check(auth.uid()=owner_id);
+create table if not exists public.share_grants(id uuid primary key default gen_random_uuid(),owner_id uuid not null references auth.users(id),recipient_id uuid not null references auth.users(id),wrapped_key text not null,permissions jsonb not null default '{"read":true}'::jsonb,expires_at timestamptz,revoked_at timestamptz,created_at timestamptz not null default now());
+alter table public.share_grants enable row level security;
+create policy "share participants" on public.share_grants for select using(auth.uid() in(owner_id,recipient_id));
+create policy "owner controls share" on public.share_grants for all using(auth.uid()=owner_id) with check(auth.uid()=owner_id);
+create table if not exists public.audit_events(id bigint generated always as identity primary key,actor_id uuid references auth.users(id),event_type text not null,target_id uuid,metadata jsonb not null default '{}'::jsonb,created_at timestamptz not null default now());
+alter table public.audit_events enable row level security;
+create policy "actor reads audit" on public.audit_events for select using(auth.uid()=actor_id);

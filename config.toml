@@ -1,0 +1,5 @@
+project_id = "agnsklwkmaudqmbmcxuj"
+[functions.register-username]
+verify_jwt = false
+[functions.login-username]
+verify_jwt = false
